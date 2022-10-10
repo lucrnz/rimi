@@ -1,24 +1,35 @@
 #[macro_use] extern crate rocket;
-use std::collections::HashMap;
-
+use std::fs;
 use rocket::State;
+use rocket::response::content;
 
 struct AppState {
-    static_files: HashMap<&'static str, &'static str>
+    index_html: String,
+    main_js: String,
+    style_css: String
 }
 
 #[get("/")]
-fn index(state: &State<AppState>) -> &'static str {
-    state.static_files["index.html"]
+fn index_html(state: &State<AppState>) -> content::RawHtml<& str> {
+    content::RawHtml(&state.index_html)
+}
+
+#[get("/main.js")]
+fn main_js(state: &State<AppState>) -> content::RawJavaScript<& str> {
+    content::RawJavaScript(&state.main_js)
+}
+
+#[get("/style.css")]
+fn style_css(state: &State<AppState>) -> content::RawCss<& str> {
+    content::RawCss(&state.style_css)
 }
 
 #[launch]
 fn rocket() -> _ {
-    let mut static_files = HashMap::new();
-    static_files.insert("index.html", "<p>Hello world!</p>");
-
-    rocket::build().mount("/", routes![index]).manage(AppState {
-        static_files
+    rocket::build().mount("/", routes![index_html, main_js, style_css]).manage(AppState {
+    index_html: fs::read_to_string("static/index.html").unwrap(),
+    main_js: fs::read_to_string("static/main.js").unwrap(),
+    style_css: fs::read_to_string("static/style.css").unwrap()
     })
 }
 
