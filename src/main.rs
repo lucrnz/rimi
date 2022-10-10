@@ -8,7 +8,7 @@ struct AppState {
 }
 
 #[get("/")]
-fn index(state: State<AppState>) -> &'static str {
+fn index(state: &State<AppState>) -> &'static str {
     state.static_files["index.html"]
 }
 
@@ -17,10 +17,8 @@ fn rocket() -> _ {
     let mut static_files = HashMap::new();
     static_files.insert("index.html", "<p>Hello world!</p>");
 
-    let app_state = AppState {
-        static_files: static_files
-    };
-
-    rocket::build().mount("/", routes![index]).manage(app_state)
+    rocket::build().mount("/", routes![index]).manage(AppState {
+        static_files
+    })
 }
 
