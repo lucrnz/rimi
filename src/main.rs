@@ -6,6 +6,7 @@ use rocket::serde::{Deserialize};
 use rocket::State;
 use std::fs;
 use std::vec;
+use std::sync::Mutex;
 
 #[derive(Deserialize)]
 #[serde(crate = "rocket::serde")]
@@ -23,14 +24,14 @@ struct AppState {
     index_html: String,
     main_js: String,
     style_css: String,
-    bookmarks: Vec<Bookmark>
+    bookmarks: Mutex<Vec<Bookmark>>
 }
-
 
 // API routes
 #[post("/bookmark", format = "json", data = "<bookmark>")]
 async fn post_bookmark(state: &State<AppState>, bookmark: Json<JSONBookmark<'_>>) {
-   state.bookmarks.push(Bookmark {
+    let mut bookmarks = state.bookmarks.lock().unwrap();
+       bookmarks.push(Bookmark {
        title: bookmark.title.to_string(),
        href: bookmark.href.to_string()
    });
@@ -38,8 +39,17 @@ async fn post_bookmark(state: &State<AppState>, bookmark: Json<JSONBookmark<'_>>
 
 // Static routes
 #[get("/")]
-async fn index_html(state: &State<AppState>) -> content::RawHtml<&str> {
-    content::RawHtml(&state.index_html)
+async fn index_html(state: &State<AppState>) -> content::RawHtml<&'static str> {
+    let mut result : String = String::new();
+    let bookmarks = state.bookmarks.lock().unwrap();
+
+    for item in bookmarks.iter() {
+        result = format!("{}\n<a href=\"{}\">{}</a>", result, item.href, item.title);
+    }
+
+    let replaced_html = state.index_html.replace("<!--@bookmarks@-->", &format!("{}\n<!--@bookmarks@-->", &result));
+
+    content::RawHtml(replaced_html).clone()
 }
 
 #[get("/main.js")]
@@ -54,13 +64,12 @@ async fn style_css(state: &State<AppState>) -> content::RawCss<&str> {
 
 #[launch]
 pub fn rocket() -> _ {
-    let bookmarks : Vec<Bookmark> = Vec::new();
     rocket::build()
-        .mount("/", routes![index_html, main_js, style_css])
+        .mount("/", routes![index_html, main_js, style_css, post_bookmark])
         .manage(AppState {
             index_html: fs::read_to_string("static/index.html").unwrap(),
             main_js: fs::read_to_string("static/main.js").unwrap(),
             style_css: fs::read_to_string("static/style.css").unwrap(),
-            bookmarks
+            bookmarks: Mutex::new(Vec::new())
         })
 }
