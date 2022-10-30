@@ -87,6 +87,7 @@ body > header > h1 {
 }
 
 #bookmarks > a {
+	max-width: fit-content;
 	color: var(--link) 
 }
 
