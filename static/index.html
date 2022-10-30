@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<meta charset="utf-8"/>
-		<title>rimi</title>
-		<link rel="icon" href="https://www.svgrepo.com/show/7875/bookmark.svg" />	
-		<link rel="stylesheet" href="style.css" />
-		<script src="main.js" defer></script>
+	<meta charset="utf-8"/>
+	<title>Luc links</title>
+	<link rel="icon" href="https://www.svgrepo.com/show/7875/bookmark.svg" />	
+	<link rel="stylesheet" href="style.css" />
+	<script src="main.js" defer></script>
 </head>
 <body>
-		<h1>My bookmarks</h1>
-		<div id="add-bookmark">
-			Title: <input type="text" id="txt-title"/>
-			URL: <input type="text" id="txt-url"/>
-			<input type="button" id="confirm-btn" class="primary" value="Confirm" />
-			<input type="button" id="cancel-btn" value="Cancel" />
-		</div>
-		<input type="button" id="toggle-add-btn" class="primary" value="Add a bookmark" />
-		<div id="bookmarks">
-			<!--@bookmarks@-->
-		</div>
+	<header>
+		<h1>Luc links</h1>
+	</header>
+	<div id="add-bookmark">
+		<input type="text" id="txt-title" placeholder="Title"/>
+		<input type="text" id="txt-url" placeholder="URL"/>
+		<input type="button" id="add-btn" class="primary" value="Submit" />
+	</div>
+	<div id="bookmarks"></div>
 </body>
 </html>

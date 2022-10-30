@@ -1,6 +1,8 @@
 :root {
 	--white: rgb(224, 224, 224);
 	--black: rgb(24, 24, 24);
+	--link: rgb(0, 36, 240);
+	--orange: rgb(255, 123, 0);
 }
 
 * {
@@ -14,9 +16,9 @@ html, body {
 	font-family: sans-serif;
 	background-color: var(--white);
 	color: var(--black);
-	max-width: 500px;
+	max-width: 80vw;
 	margin: auto;
-	padding-top: 1rem;
+	padding: 1rem;
 }
 
 input {
@@ -45,7 +47,7 @@ input[type=button]:focus {
 }
 
 input[type=button].primary {
-	background-color: orange;
+	background-color: var(--orange);
 }
 
 input:hover {
@@ -54,16 +56,40 @@ input:hover {
 
 input:focus, button:focus {
 	outline-style: solid;
-	outline-color: orange;
+	outline-color: var(--orange);
 }
 
-body > h1 {
-	margin: 0 0 1rem 0;
+
+body > header {
+	min-width: 100%;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	background-color: var(--orange);
+}
+
+body > header > h1 {
+	font-size: 1.5rem;
 }
 
 #add-bookmark {
-	display: none;
-	margin-top: 2rem;
-	flex-direction: column;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 	gap: 0.5rem;
+}
+
+#bookmarks {
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 0.5rem;
+}
+
+#bookmarks > a {
+	color: var(--link) 
+}
+
+#bookmarks > a:visited {
+	color: var(--link) 
 }
