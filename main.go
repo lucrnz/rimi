@@ -26,9 +26,10 @@ type Bookmark struct {
 }
 
 type StaticFiles struct {
-	IndexHTML string
-	MainJS    string
-	StyleCSS  string
+	IndexHTML  string
+	MainJS     string
+	StyleCSS   string
+	FavIconSVG string
 }
 
 func readFileAsStringOrPanic(filePath string) string {
@@ -49,9 +50,10 @@ func main() {
 	}
 
 	staticFiles := StaticFiles{
-		IndexHTML: readFileAsStringOrPanic("./static/index.html"),
-		MainJS:    readFileAsStringOrPanic("./static/main.js"),
-		StyleCSS:  readFileAsStringOrPanic("./static/style.css"),
+		IndexHTML:  readFileAsStringOrPanic("./static/index.html"),
+		MainJS:     readFileAsStringOrPanic("./static/main.js"),
+		StyleCSS:   readFileAsStringOrPanic("./static/style.css"),
+		FavIconSVG: readFileAsStringOrPanic("./static/favicon.svg"),
 	}
 
 	store := BookmarkStore{
@@ -89,6 +91,11 @@ func main() {
 	router.HandleFunc("/style.css", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "text/css; charset=utf-8")
 		w.Write([]byte(staticFiles.StyleCSS))
+	}).Methods("GET")
+
+	router.HandleFunc("/favicon.svg", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "image/svg+xml; charset=utf-8")
+		w.Write([]byte(staticFiles.FavIconSVG))
 	}).Methods("GET")
 
 	router.HandleFunc("/api/bookmarks", func(w http.ResponseWriter, r *http.Request) {

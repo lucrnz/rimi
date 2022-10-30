@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" style="background-color: rgb(255, 123, 0)">
+  <style>
+  	.text {
+    	font-size: 10pt;
+    }
+   </style>
+  <text x="4" y="13" fill="white" class="text">L</text>
+</svg>
