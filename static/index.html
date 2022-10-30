@@ -3,16 +3,21 @@
 <head>
 		<meta charset="utf-8"/>
 		<title>rimi</title>
+		<link rel="icon" href="https://www.svgrepo.com/show/7875/bookmark.svg" />	
 		<link rel="stylesheet" href="style.css" />
 		<script src="main.js" defer></script>
 </head>
 <body>
 		<h1>My bookmarks</h1>
-		Title: <input type="text" id="txt-title"/>
-		URL: <input type="text" id="txt-href"/>
-		<input type="button" id="add-btn" />
-		<hr />
-		<!--@bookmarks@-->
+		<div id="add-bookmark">
+			Title: <input type="text" id="txt-title"/>
+			URL: <input type="text" id="txt-url"/>
+			<input type="button" id="confirm-btn" class="primary" value="Confirm" />
+			<input type="button" id="cancel-btn" value="Cancel" />
+		</div>
+		<input type="button" id="toggle-add-btn" class="primary" value="Add a bookmark" />
+		<div id="bookmarks">
+			<!--@bookmarks@-->
+		</div>
 </body>
 </html>
-

@@ -8,8 +8,6 @@ Often it happens that I need to recall to articles that I read, or documentation
 
 This program allows me to deploy an auth-only website that I can safely access on any device I own to search thro my bookmarks or add more.
 
-I also want to take this as an oportunity to learn Rust.
-
 # Disclaimer
 
 This program is a work in progress and it's not done.

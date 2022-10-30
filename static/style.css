@@ -1,5 +1,69 @@
-body {
-	color: white;
-	background-color: black;
+:root {
+	--white: rgb(224, 224, 224);
+	--black: rgb(24, 24, 24);
 }
 
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	-webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+	font-family: sans-serif;
+	background-color: var(--white);
+	color: var(--black);
+	max-width: 500px;
+	margin: auto;
+	padding-top: 1rem;
+}
+
+input {
+	border-radius: 0.5rem;
+	border: solid 0.1rem var(--black);
+	background-color: var(--white);
+	color: var(--black);
+	margin: 0.15rem 0 0.15rem 0;
+	padding: 0.3rem;
+}
+
+input[type=text] {
+	padding: 0.5rem;
+}
+
+input[type=button] {
+	padding: 0.3rem;
+}
+
+input[type=button]:hover {
+	cursor: pointer;
+}
+
+input[type=button]:focus {
+	outline: none;
+}
+
+input[type=button].primary {
+	background-color: orange;
+}
+
+input:hover {
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+input:focus, button:focus {
+	outline-style: solid;
+	outline-color: orange;
+}
+
+body > h1 {
+	margin: 0 0 1rem 0;
+}
+
+#add-bookmark {
+	display: none;
+	margin-top: 2rem;
+	flex-direction: column;
+	gap: 0.5rem;
+}
