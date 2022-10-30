@@ -41,6 +41,11 @@ func readFileAsStringOrPanic(filePath string) string {
 }
 
 func main() {
+	bind := "localhost"
+	if len(os.Getenv("BIND")) > 0 {
+		bind = os.Getenv("BIND")
+	}
+
 	port := "8000"
 	if len(os.Getenv("PORT")) > 0 {
 		if _, err := strconv.Atoi(os.Getenv("PORT")); err != nil {
@@ -152,8 +157,8 @@ func main() {
 	// catch SIGETRM or SIGINTERRUPT
 	signal.Notify(cancelChan, syscall.SIGTERM, syscall.SIGINT)
 	go func() {
-		fmt.Printf("Server listening on port %v", port)
-		log.Fatal(http.ListenAndServe(":"+port, router))
+		fmt.Printf("rimi will listen on %v:%v\n", bind, port)
+		log.Fatal(http.ListenAndServe(bind+":"+port, router))
 	}()
 	sig := <-cancelChan
 	log.Printf("Caught signal %v\n", sig)
