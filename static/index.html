@@ -10,14 +10,18 @@
 	<script src="main.js" defer></script>
 </head>
 <body>
-	<header>
-		<h1>Luc links</h1>
-	</header>
-	<div id="add-bookmark">
-		<input type="text" id="txt-title" placeholder="Title"/>
-		<input type="text" id="txt-url" placeholder="URL"/>
-		<input type="button" id="add-btn" class="primary" value="Submit" />
+	<div id="container">
+		<header>
+			<h1>Luc links</h1>
+		</header>
+		<div id="add-bookmark">
+			Add a bookmark:
+			<input type="text" id="txt-title" placeholder="Title"/>
+			<input type="text" id="txt-url" placeholder="URL"/>
+			<input type="button" id="add-btn" class="primary" value="Submit" />
+			<input type="button" id="del-btn" value="Delete" data-mode="check" />
+		</div>
+		<div id="bookmarks"></div>
 	</div>
-	<div id="bookmarks"></div>
 </body>
 </html>

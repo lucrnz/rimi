@@ -153,6 +153,63 @@ func main() {
 		w.Write(data)
 	}).Methods("GET")
 
+	router.HandleFunc("/api/bookmarks", func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		decoder := json.NewDecoder(r.Body)
+		requestInfo := struct {
+			URL string `json:"url"`
+		}{}
+		err := decoder.Decode(&requestInfo)
+		if err != nil {
+			msg := fmt.Sprintf("Cannot decode request: %v", err)
+			fmt.Fprintf(os.Stderr, "%v", msg)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(msg))
+			return
+		}
+
+		if len(requestInfo.URL) > 0 {
+			store.mu.Lock()
+			defer store.mu.Unlock()
+
+			elIdx := -1
+			for idx, el := range store.data {
+				if el.URL == requestInfo.URL {
+					elIdx = idx
+					break
+				}
+			}
+			if elIdx > -1 {
+				newBookmarks := make([]Bookmark, len(store.data)-1)
+
+				for idx, el := range store.data {
+					if idx == elIdx {
+						continue
+					}
+					newBookmarks = append(newBookmarks, Bookmark{
+						Title: el.Title,
+						URL:   el.URL,
+					})
+				}
+
+				store.data = newBookmarks
+
+				w.WriteHeader(http.StatusOK)
+			} else {
+				msg := "Bookmark not found"
+				fmt.Fprintf(os.Stderr, "%v", msg)
+				w.WriteHeader(http.StatusNotFound)
+				w.Write([]byte(msg))
+			}
+		} else {
+			msg := "Invalid bookmark"
+			fmt.Fprintf(os.Stderr, "%v", msg)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(msg))
+			return
+		}
+	}).Methods("DELETE")
+
 	cancelChan := make(chan os.Signal, 1)
 	// catch SIGETRM or SIGINTERRUPT
 	signal.Notify(cancelChan, syscall.SIGTERM, syscall.SIGINT)

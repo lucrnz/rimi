@@ -1,5 +1,4 @@
 :root {
-	--white: rgb(224, 224, 224);
 	--black: rgb(24, 24, 24);
 	--link: rgb(0, 36, 240);
 	--orange: rgb(255, 123, 0);
@@ -14,11 +13,8 @@
 
 html, body {
 	font-family: sans-serif;
-	background-color: var(--white);
+	background-color: gray;
 	color: var(--black);
-	max-width: 80vw;
-	margin: auto;
-	padding: 1rem;
 }
 
 input {
@@ -59,15 +55,21 @@ input:focus, button:focus {
 	outline-color: var(--orange);
 }
 
-
-body > header {
+body > #container > header {
 	min-width: 100%;
-	padding-top: 0.25rem;
-	padding-bottom: 0.25rem;
+	padding: 0.30rem;
 	background-color: var(--orange);
 }
 
-body > header > h1 {
+body > #container {
+	background-color: whitesmoke;
+	min-height: 99vh;
+	max-width: 80vw;
+	margin: auto;
+	padding: 1rem;
+}
+
+body > #container > header > h1 {
 	font-size: 1.5rem;
 }
 
@@ -86,11 +88,28 @@ body > header > h1 {
 	gap: 0.5rem;
 }
 
-#bookmarks > a {
+#bookmarks > div {
 	max-width: fit-content;
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+#bookmarks > div > a.bookmark {
 	color: var(--link) 
 }
 
-#bookmarks > a:visited {
+#bookmarks > div > a.bookmark:visited {
 	color: var(--link) 
+}
+
+#bookmarks > div > a.options,
+#bookmarks > div > a.options:visited 
+{
+	color: lightslategray;
+}
+
+#bookmarks > div > a.options:hover
+{
+	color: var(--black);
 }
