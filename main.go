@@ -180,20 +180,21 @@ func main() {
 				}
 			}
 			if elIdx > -1 {
-				newBookmarks := make([]Bookmark, len(store.data)-1)
+				newData := make([]Bookmark, len(store.data)-1)
 
 				for idx, el := range store.data {
 					if idx == elIdx {
 						continue
 					}
-					newBookmarks = append(newBookmarks, Bookmark{
-						Title: el.Title,
-						URL:   el.URL,
-					})
+					if len(el.Title) > 0 && len(el.URL) > 0 {
+						newData = append(newData, Bookmark{
+							Title: el.Title,
+							URL:   el.URL,
+						})
+					}
 				}
 
-				store.data = newBookmarks
-
+				store.data = newData
 				w.WriteHeader(http.StatusOK)
 			} else {
 				msg := "Bookmark not found"
