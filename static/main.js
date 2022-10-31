@@ -100,13 +100,16 @@ q("#del-btn").addEventListener('click', async () => {
     }
 });
 
-q("#add-btn").addEventListener('click', async function () {
+async function submitBookmarkAction() {
     if (isDeleteMode) {
         return;
     }
 
-    const enteredURL = q("#txt-url").value;
-    const title = q("#txt-title").value;
+    const enteredURL = q("#txt-url").value.repeat(1);
+    const title = q("#txt-title").value.repeat(1);
+    
+    q("#txt-url").value = "";
+    q("#txt-title").value = "";
 
     if (enteredURL.length > 0 && (enteredURL.includes("http://") || enteredURL.includes("https://")) && enteredURL.includes(".") && title.length > 0) {
         renderBookmark({url: enteredURL, title});
@@ -126,8 +129,14 @@ q("#add-btn").addEventListener('click', async function () {
             })
         })
         await loadBookmarks();
-        q("#txt-url").value = "";
-        q("#txt-title").value = "";
+    }
+}
+
+q("#add-btn").addEventListener('click', submitBookmarkAction);
+
+q("#txt-url").addEventListener('keyup', async (event) => {
+    if (event.keyCode === 13) {
+        await submitBookmarkAction();
     }
 });
 
