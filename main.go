@@ -180,21 +180,11 @@ func main() {
 				}
 			}
 			if elIdx > -1 {
-				newData := make([]Bookmark, len(store.data)-1)
-
-				for idx, el := range store.data {
-					if idx == elIdx {
-						continue
-					}
-					if len(el.Title) > 0 && len(el.URL) > 0 {
-						newData = append(newData, Bookmark{
-							Title: el.Title,
-							URL:   el.URL,
-						})
-					}
-				}
-
-				store.data = newData
+				// remove element from array using slicing
+				// read: https://stackoverflow.com/a/57213476
+				newData := make([]Bookmark, 0)
+				newData = append(newData, store.data[:elIdx]...)
+				store.data = append(newData, store.data[elIdx+1:]...)
 				w.WriteHeader(http.StatusOK)
 			} else {
 				msg := "Bookmark not found"

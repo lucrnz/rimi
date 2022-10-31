@@ -105,10 +105,15 @@ q("#add-btn").addEventListener('click', async function () {
         return;
     }
 
-    const url = q("#txt-url").value;
+    const enteredURL = q("#txt-url").value;
     const title = q("#txt-title").value;
 
-    if (url.length > 0 && title.length > 0) {
+    if (enteredURL.length > 0 && (enteredURL.includes("http://") || enteredURL.includes("https://")) && enteredURL.includes(".") && title.length > 0) {
+        renderBookmark({url: enteredURL, title});
+        const url = q("#bookmarks").lastChild.querySelector("a.bookmark").href;
+
+        console.log({enteredURL, url});
+
         await fetch("/api/bookmarks", {
             method: "POST",
             cache: "no-cache",
