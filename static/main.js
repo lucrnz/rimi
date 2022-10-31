@@ -70,9 +70,9 @@ q("#del-btn").addEventListener('click', async () => {
         }
         q("#del-btn").value = "Confirm delete";
         q("#del-btn").dataset.mode = "confirm";
+        isDeleteMode = true;
     } else if ( q("#del-btn").dataset.mode === "confirm") {
         const elements = Array.from(q("#bookmarks").children);
-
         const urlArray = [];
 
         if (elements.length > 0) {
@@ -95,6 +95,7 @@ q("#del-btn").addEventListener('click', async () => {
             await loadBookmarks();
         }
         
+        isDeleteMode = false;
         q("#del-btn").value = "Delete";
         q("#del-btn").dataset.mode = "check"; 
     }
@@ -114,9 +115,6 @@ async function submitBookmarkAction() {
     if (enteredURL.length > 0 && (enteredURL.includes("http://") || enteredURL.includes("https://")) && enteredURL.includes(".") && title.length > 0) {
         renderBookmark({url: enteredURL, title});
         const url = q("#bookmarks").lastChild.querySelector("a.bookmark").href;
-
-        console.log({enteredURL, url});
-
         await fetch("/api/bookmarks", {
             method: "POST",
             cache: "no-cache",
