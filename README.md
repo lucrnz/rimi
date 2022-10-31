@@ -8,6 +8,53 @@ Often it happens that I need to recall to articles that I read, or documentation
 
 This program allows me to deploy an auth-only website that I can safely access on any device I own to search thro my bookmarks or add more.
 
+# Compiling and setup
+
+You need the Go programming language - [read this](https://golang.org/doc/install)
+
+**Optimization note**: Since Go 1.18, if you are using an x86_64 CPU you can setup the environment variable `GOAMD64`
+
+You can found a detailed description [here](https://github.com/golang/go/wiki/MinimumRequirements#amd64)
+
+***TL;DR:** Use v1 for any x64 cpu, v2 for circa 2009 "Nehalem and Jaguar", v3 for circa 2015 "Haswell and Excavator" and v4 for AVX-512.*
+
+**Example:** `export GOAMD64=v2`
+
+Use the make command for building the binary
+
+	make
+
+Run the service specing which host and port to run.
+For this program in particular, I recommend running on local network interfaces or a mesh network with encryptation like [Tailscale](https://tailscale.com/kb/1151/what-is-tailscale/)
+	
+	BIND=127.0.0.1 PORT=5050 ./rimi
+
+You can use this example [user systemd unit](https://wiki.archlinux.org/title/systemd/User) if you wanna keep it running:
+
+	[Unit]
+	Description=rimi bookmark manager
+
+	[Service]
+	WorkingDirectory=/home/user/rimi
+	Environment=PORT=5050
+	Environment=BIND=127.0.0.1
+	ExecStart=/home/user/rimi/rimi
+
+	[Install]
+	WantedBy=default.target
+
+# Import bookmarks from a web browser
+
+I only tested this with Mozilla Firefox, might work with Chromium but I am not sure.
+
+You need [Deno](https://deno.land/) to run the script.
+
+Use your web browser to export your bookmarks into a bookmarks.html file and place it in this same directory.
+
+Run this command:
+
+	deno run -A --unstable convertBookmarksHTMLtoJSON.ts
+
 # Disclaimer
 
 This program is a work in progress and it's not done.
