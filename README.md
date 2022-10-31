@@ -8,6 +8,8 @@ Often it happens that I need to recall to articles that I read, or documentation
 
 This program allows me to deploy an auth-only website that I can safely access on any device I own to search thro my bookmarks or add more.
 
+![Screenshot](./screenshot.png)
+
 # Compiling and setup
 
 You need the Go programming language - [read this](https://golang.org/doc/install)
