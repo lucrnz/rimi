@@ -27,9 +27,11 @@ Use the make command for building the binary
 	make
 
 Run the service specing which host and port to run.
-For this program in particular, I recommend running on local network interfaces or a mesh network with encryptation like [Tailscale](https://tailscale.com/kb/1151/what-is-tailscale/)
+For this program in particular, I recommend running on local network interfaces or a mesh network with encryptation like [Tailscale](https://tailscale.com/kb/1151/what-is-tailscale/).
+
+You can also customize the title of the application by changing the environment variable "TITLE".
 	
-	BIND=127.0.0.1 PORT=5050 ./rimi
+	BIND=127.0.0.1 PORT=5050 TITLE="Emily's bookmarks" ./rimi
 
 You can use this example [user systemd unit](https://wiki.archlinux.org/title/systemd/User) if you wanna keep it running:
 
@@ -38,6 +40,7 @@ You can use this example [user systemd unit](https://wiki.archlinux.org/title/sy
 
 	[Service]
 	WorkingDirectory=/home/user/rimi
+	Environment=TITLE=Luc links
 	Environment=PORT=5050
 	Environment=BIND=127.0.0.1
 	ExecStart=/home/user/rimi/rimi

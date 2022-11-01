@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"strconv"
+	"strings"
 	"sync"
 	"syscall"
 
@@ -54,8 +55,13 @@ func main() {
 		port = os.Getenv("PORT")
 	}
 
+	title := "rimi - bookmark manager"
+	if len(os.Getenv("TITLE")) > 0 {
+		title = os.Getenv("TITLE")
+	}
+
 	staticFiles := StaticFiles{
-		IndexHTML:  readFileAsStringOrPanic("./static/index.html"),
+		IndexHTML:  strings.ReplaceAll(readFileAsStringOrPanic("./static/index.html"), "%TITLE%", title),
 		MainJS:     readFileAsStringOrPanic("./static/main.js"),
 		StyleCSS:   readFileAsStringOrPanic("./static/style.css"),
 		FavIconSVG: readFileAsStringOrPanic("./static/favicon.svg"),
