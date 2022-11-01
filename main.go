@@ -59,6 +59,8 @@ func main() {
 	if len(os.Getenv("TITLE")) > 0 {
 		title = os.Getenv("TITLE")
 	}
+	sslCert := os.Getenv("SSL_CERT")
+	sslKey := os.Getenv("SSL_KEY")
 
 	staticFiles := StaticFiles{
 		IndexHTML:  strings.ReplaceAll(readFileAsStringOrPanic("./static/index.html"), "%TITLE%", title),
@@ -211,8 +213,19 @@ func main() {
 	// catch SIGETRM or SIGINTERRUPT
 	signal.Notify(cancelChan, syscall.SIGTERM, syscall.SIGINT)
 	go func() {
-		fmt.Printf("rimi will listen on %v:%v\n", bind, port)
-		log.Fatal(http.ListenAndServe(bind+":"+port, router))
+		sslEnabled := len(sslCert) > 0 && len(sslKey) > 0
+		protocolStr := "http"
+		if sslEnabled {
+			protocolStr = "https"
+		}
+		listenAddr := bind + ":" + port
+
+		fmt.Printf("rimi will listen on %v://%v:%v\n", protocolStr, bind, port)
+		if sslEnabled {
+			log.Fatal(http.ListenAndServeTLS(listenAddr, sslCert, sslKey, router))
+		} else {
+			log.Fatal(http.ListenAndServe(listenAddr, router))
+		}
 	}()
 	sig := <-cancelChan
 	log.Printf("Caught signal %v\n", sig)
