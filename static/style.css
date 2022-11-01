@@ -59,15 +59,17 @@ body > #container > header {
 	min-width: 100%;
 	padding: 0.30rem;
 	background-color: var(--orange);
+	border-radius: 0.5rem;
 }
 
 body > #container {
 	background-color: whitesmoke;
 	min-height: 99vh;
-	max-width: 80vw;
+	max-width: 99vw;
 	margin: auto;
 	padding: 1rem;
 }
+
 
 body > #container > header > h1 {
 	font-size: 1.5rem;
@@ -75,10 +77,14 @@ body > #container > header > h1 {
 
 #add-bookmark {
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	margin: 1rem 0 1rem 1rem;
+	gap: 0.5rem;
+}
+
+#add-bookmark > .buttons {
+	display: flex;
 	flex-direction: row;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
 	gap: 0.5rem;
 }
 
@@ -86,6 +92,7 @@ body > #container > header > h1 {
 	display: flex;
 	flex-direction: column-reverse;
 	gap: 0.5rem;
+	margin-left: 1rem;
 }
 
 #bookmarks > div {
@@ -112,4 +119,17 @@ body > #container > header > h1 {
 #bookmarks > div > a.options:hover
 {
 	color: var(--black);
+}
+
+/* Convert mobile layout to desktop view */
+@media (min-width: 1024px) {
+	body > #container {
+		max-width: 80vw;
+		border-radius: 0.5rem;
+	}
+
+	#add-bookmark {
+		align-items: center;
+		flex-direction: row;
+	}
 }
