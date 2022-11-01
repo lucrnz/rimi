@@ -33,7 +33,8 @@ You can also customize the title of the application by changing the environment 
     
     BIND=127.0.0.1 PORT=5050 TITLE="Emily's bookmarks" ./rimi
 
-For SSL/HTTPS support you can either run locally and setup a reverse proxy like [Caddy](https://caddyserver.com/) (Recommended)
+For SSL/HTTPS support you can either run locally and setup a reverse proxy like [Caddy](https://caddyserver.com/) (recommended)
+
 Or you have the option to set the following environment variables:
 
     SSL_CERT - Path to the SSL certificate file.
