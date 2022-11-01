@@ -40,7 +40,7 @@ You can use this example [user systemd unit](https://wiki.archlinux.org/title/sy
 
 	[Service]
 	WorkingDirectory=/home/user/rimi
-	Environment=TITLE=Luc links
+	Environment=TITLE="Emily's bookmarks"
 	Environment=PORT=5050
 	Environment=BIND=127.0.0.1
 	ExecStart=/home/user/rimi/rimi
