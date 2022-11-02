@@ -39,6 +39,9 @@ function renderBookmark(bookmark) {
         link.classList.add("bookmark");
         link.innerText = title;
         link.href = url;
+        link.relList.add("noreferrer");
+        link.relList.add("noopener");
+        link.target = "_blank";
 
         div.appendChild(checkmark);
         div.appendChild(link);
