@@ -29,6 +29,10 @@ Use the make command for building the binary
 Run the service specifying which host and port to run.
 For this program, I recommend running on local network interfaces or a mesh network with encryption like [Tailscale](https://tailscale.com/kb/1151/what-is-tailscale/).
 
+To get started, create an empty bookmarks file:
+
+    echo "[]" > data.json
+
 You can also customize the title of the application by changing the environment variable "TITLE".
     
     BIND=127.0.0.1 PORT=5050 TITLE="Emily's bookmarks" ./rimi
@@ -56,6 +60,10 @@ You can use this example [user systemd unit](https://wiki.archlinux.org/title/sy
     WantedBy=default.target
 
 # Setup with Docker
+
+Create an empty bookmarks file:
+
+    echo "[]" > data.json
 
 Build and start the image:
 
