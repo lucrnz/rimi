@@ -55,6 +55,16 @@ You can use this example [user systemd unit](https://wiki.archlinux.org/title/sy
     [Install]
     WantedBy=default.target
 
+# Setup with Docker
+
+Build and start the image:
+
+    docker-compose up -d
+
+**Tip**: Remove the `-d` flag if you don't want the service to auto-start.
+
+This will start the service on the port `8000`, edit the provided `docker-compose.yml` to change ports.
+
 # Import bookmarks from a web browser
 
 I only tested this with Mozilla Firefox, might work with Chromium but I am not sure.

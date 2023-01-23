@@ -9,6 +9,9 @@ WORKDIR /build
 RUN CGO_ENABLED=0 GOOS=linux go build -o main
 
 FROM alpine:3.17
+WORKDIR /app
+
 COPY --from=builder /build/main .
+COPY ./static ./static
 
 ENTRYPOINT [ "./main" ]
