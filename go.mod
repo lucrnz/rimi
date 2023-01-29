@@ -1,4 +1,4 @@
-module git.lucdev.net/luc/rimi
+module github.com/lucrnz
 
 go 1.18
 
